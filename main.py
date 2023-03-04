@@ -32,6 +32,13 @@ class Student:
                f'Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n' \
                f'Завершённые курсы: {", ".join(self.finished_courses)}'
 
+    def __lt__(self, other):
+        """Метод сравнения студентов по средней оценке за все домашние задания"""
+        if not isinstance(other, Student):
+            print('Not a Student!')
+            return
+        return self.__average_grades() < other.__average_grades()
+
 
 class Mentor:
 
@@ -59,6 +66,13 @@ class Lecturer(Mentor):
         return f'Имя: {self.name}\n' \
                f'Фамилия: {self.surname}\n' \
                f'Средняя оценка за лекции: {self.__average_grades()}'
+
+    def __lt__(self, other):
+        """Метод сравнения лекторов по средней оценке за все лекции"""
+        if not isinstance(other, Lecturer):
+            print('Not a Lecturer!')
+            return
+        return self.__average_grades() < other.__average_grades()
 
 
 class Reviewer(Mentor):
@@ -127,7 +141,11 @@ print(reviever_2, '\n')
 print('Лекторы:\n')
 print(lecturer_1, '\n')
 print(lecturer_2, '\n')
+print(f'{lecturer_1.name} {lecturer_1.surname} < {lecturer_2.name} {lecturer_2.surname}:', lecturer_1 < lecturer_2)
+print(f'{lecturer_1.name} {lecturer_1.surname} > {lecturer_2.name} {lecturer_2.surname}:', lecturer_1 > lecturer_2, '\n')
 
 print('Студенты:\n')
 print(student_1, '\n')
 print(student_2, '\n')
+print(f'{student_1.name} {student_1.surname} < {student_2.name} {student_2.surname}:', student_1 < student_2)
+print(f'{student_1.name} {student_1.surname} > {student_2.name} {student_2.surname}:', student_1 > student_2, '\n')
