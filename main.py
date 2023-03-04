@@ -92,6 +92,30 @@ class Reviewer(Mentor):
                f'Фамилия: {self.surname}'
 
 
+def calculates_average_grade_for_hw(students, course):
+    """Считает среднюю оценку за домашние задания по всем студентам в рамках конкретного курса"""
+    sum_grades = 0
+    count = 0
+    for student in students:
+        for k, v in student.grades.items():
+            if course in k:
+                sum_grades += sum(v) / len(v)
+                count += 1
+    return round(sum_grades / count, 2)
+
+
+def calculates_average_grade_for_lectures(lecturers, course):
+    """Считает среднюю оценку за лекции всех лекторов в рамках конкретного курса"""
+    sum_grades = 0
+    count = 0
+    for lecturer in lecturers:
+        for k, v in lecturer.grades.items():
+            if course in k:
+                sum_grades += sum(v) / len(v)
+                count += 1
+    return round(sum_grades / count, 2)
+
+
 student_1 = Student('Игорь', 'Кузьминых', 'м')
 student_1.courses_in_progress += ['Python']
 student_1.courses_in_progress += ['Git']
@@ -133,6 +157,8 @@ student_1.rate_lecturer(lecturer_2, 'Git', 9)
 student_2.rate_lecturer(lecturer_1, 'Python', 9)
 student_2.rate_lecturer(lecturer_2, 'Git', 8)
 
+students_list = [student_1, student_2]
+lecturers_list = [lecturer_1, lecturer_2]
 
 print('Ревьюеры:\n')
 print(reviever_1, '\n')
@@ -149,3 +175,9 @@ print(student_1, '\n')
 print(student_2, '\n')
 print(f'{student_1.name} {student_1.surname} < {student_2.name} {student_2.surname}:', student_1 < student_2)
 print(f'{student_1.name} {student_1.surname} > {student_2.name} {student_2.surname}:', student_1 > student_2, '\n')
+
+print(f"Средняя оценка студентов за курс Python: {calculates_average_grade_for_hw(students_list, 'Python')}")
+print(f"Средняя оценка студентов за курс Git: {calculates_average_grade_for_hw(students_list, 'Git')}\n")
+
+print(f"Средняя оценка лекторов за курс Python: {calculates_average_grade_for_lectures(lecturers_list, 'Python')}")
+print(f"Средняя оценка лекторов за курс Git: {calculates_average_grade_for_lectures(lecturers_list, 'Git')}")
